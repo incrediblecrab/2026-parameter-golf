@@ -1,0 +1,150 @@
+{
+  "schema_version": 1,
+  "snapshot_date": "September 9, 2026",
+  "upstream": {
+    "repository": "https://github.com/openai/parameter-golf",
+    "base_commit": "f5c079314c4877fbb0af378c0abade5a8ca33d3a",
+    "original_readme": "UPSTREAM_README.md"
+  },
+  "fork": "https://github.com/incrediblecrab/parameter-golf",
+  "models": [
+    {
+      "id": "baseline",
+      "name": "Naive baseline",
+      "category": "baseline",
+      "directory": "records/track_10min_16mb/2026-03-17_NaiveBaseline",
+      "entry_points": ["train_gpt.py"],
+      "source_ref": "main",
+      "source_commit": "f5c079314c4877fbb0af378c0abade5a8ca33d3a"
+    },
+    {
+      "id": "winner",
+      "name": "Calib32 token-only n-gram tilt and AsymLogit",
+      "category": "record",
+      "directory": "records/track_10min_16mb/2026-05-01_SP8192_PR2130Base_Calib32",
+      "entry_points": ["train_gpt.py"],
+      "source_ref": "refs/pull/2135/head",
+      "source_commit": "ff905226136eb2506fe9505feff87f58eb6dc4ff",
+      "pull_request": "https://github.com/openai/parameter-golf/pull/2135"
+    },
+    {
+      "id": "progressive-context",
+      "name": "Progressive 3k context and short-document TTT",
+      "category": "record",
+      "directory": "records/track_10min_16mb/2026-04-30_SP8192_CaseOps_Progressive3k_ShortDocTTT",
+      "entry_points": ["train_gpt.py"],
+      "source_ref": "refs/pull/2014/head",
+      "source_commit": "fcd0b8357f58996a931a515c7da3ee0c999abc1e",
+      "pull_request": "https://github.com/openai/parameter-golf/pull/2014"
+    },
+    {
+      "id": "selective-ttt",
+      "name": "Long-context no-query/value TTT and QK gain",
+      "category": "record",
+      "directory": "records/track_10min_16mb/2026-04-30_LongCtx_NoQV_QK525_on_1945_1.0586",
+      "entry_points": ["train_gpt.py"],
+      "source_ref": "refs/pull/1953/head",
+      "source_commit": "5a47da61918fd330c88449456307f795b5c2b57e",
+      "pull_request": "https://github.com/openai/parameter-golf/pull/1953"
+    },
+    {
+      "id": "ternary",
+      "name": "Ternary U-Net transformer",
+      "category": "record",
+      "directory": "records/track_10min_16mb/2026-03-24_74M_Ternary_UNet_FP8_10L_8192BPE_YaRN_NeoMuon",
+      "entry_points": ["train_gpt_cuda_ternary.py"],
+      "source_ref": "main",
+      "source_commit": "f5c079314c4877fbb0af378c0abade5a8ca33d3a"
+    },
+    {
+      "id": "binary",
+      "name": "Binary U-Net transformer",
+      "category": "non-record",
+      "directory": "records/track_non_record_16mb/2026-03-24_106M_Binary_Asymmetric_UNet_FP8_15L_8192BPE_YaRN_NeoMuon_Smear",
+      "entry_points": ["train_gpt_cuda_binary.py"],
+      "source_ref": "main",
+      "source_commit": "f5c079314c4877fbb0af378c0abade5a8ca33d3a"
+    },
+    {
+      "id": "diffusion",
+      "name": "Masked diffusion language model",
+      "category": "non-record",
+      "directory": "records/track_non_record_16mb/2026-03-29_LLaDA_MDLM_Diffusion",
+      "entry_points": ["train_mdlm.py"],
+      "source_ref": "main",
+      "source_commit": "f5c079314c4877fbb0af378c0abade5a8ca33d3a",
+      "pull_request": "https://github.com/openai/parameter-golf/pull/1106"
+    },
+    {
+      "id": "mamba3",
+      "name": "Mamba-3 hybrid state-space and attention model",
+      "category": "non-record",
+      "directory": "records/track_non_record_16mb/2026-04-15_Mamba3Hybrid_SP8192_GPTQ_TTT",
+      "entry_points": ["train_mamba3_hybrid.py"],
+      "source_ref": "main",
+      "source_commit": "f5c079314c4877fbb0af378c0abade5a8ca33d3a",
+      "pull_request": "https://github.com/openai/parameter-golf/pull/1644"
+    },
+    {
+      "id": "jepa",
+      "name": "JEPA and Mamba-2 LeWorldModel",
+      "category": "non-record",
+      "directory": "records/track_non_record_16mb/2026-03-26_37M_LeWM_Jepa_Mamba2_10L_UNet_INT4FP8QAT_Brotli",
+      "entry_points": ["train_jepa_ssm.py"],
+      "source_ref": "main",
+      "source_commit": "f5c079314c4877fbb0af378c0abade5a8ca33d3a",
+      "pull_request": "https://github.com/openai/parameter-golf/pull/903"
+    },
+    {
+      "id": "hnet",
+      "name": "H-Net byte-versus-subword dynamic chunking study",
+      "category": "non-record",
+      "directory": "records/track_non_record_16mb/2026-03-29_HNet_ByteVsSubword_Study",
+      "entry_points": ["train_gpt_hnet_byte.py", "train_gpt_hnet.py"],
+      "source_ref": "main",
+      "source_commit": "f5c079314c4877fbb0af378c0abade5a8ca33d3a",
+      "pull_request": "https://github.com/openai/parameter-golf/pull/1104"
+    },
+    {
+      "id": "universal",
+      "name": "Universal Transformer with iteration embeddings",
+      "category": "non-record",
+      "directory": "records/track_non_record_16mb/2026-03-29_Universal_Transformer",
+      "entry_points": ["train_gpt.py"],
+      "source_ref": "refs/pull/1110/head",
+      "source_commit": "8d582756935d3ac246bf9f6b4b5dbde2b56f877f",
+      "pull_request": "https://github.com/openai/parameter-golf/pull/1110"
+    },
+    {
+      "id": "legendre",
+      "name": "LegendreGPT depth parameterization",
+      "category": "non-record",
+      "directory": "records/track_non_record_16mb/2026-03-31_LegendreGPT",
+      "entry_points": ["train_gpt_legendre.py"],
+      "source_ref": "main",
+      "source_commit": "f5c079314c4877fbb0af378c0abade5a8ca33d3a",
+      "pull_request": "https://github.com/openai/parameter-golf/pull/1337"
+    },
+    {
+      "id": "random-adapters",
+      "name": "Learned adapters on random linear maps",
+      "category": "non-record",
+      "directory": "records/track_non_record_16mb/2026-04-30_Random_Linear_Adapter",
+      "entry_points": ["train_gpt.py"],
+      "source_ref": "main",
+      "source_commit": "f5c079314c4877fbb0af378c0abade5a8ca33d3a",
+      "pull_request": "https://github.com/openai/parameter-golf/pull/2058"
+    },
+    {
+      "id": "dg-attention",
+      "name": "Depth-scheduled differential attention",
+      "category": "non-record",
+      "directory": "records/track_non_record_16mb/2026-03-23_DGAttention_DavidGao",
+      "entry_points": ["train_gpt.py"],
+      "related_files": ["paper/dg_attention.pdf", "paper/dg_attention.tex", "measure_variance_ratio.py"],
+      "source_ref": "main",
+      "source_commit": "f5c079314c4877fbb0af378c0abade5a8ca33d3a",
+      "pull_request": "https://github.com/openai/parameter-golf/pull/542"
+    }
+  ]
+}
