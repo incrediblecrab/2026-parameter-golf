@@ -6,7 +6,7 @@
     "base_commit": "f5c079314c4877fbb0af378c0abade5a8ca33d3a",
     "original_readme": "UPSTREAM_README.md"
   },
-  "fork": "https://github.com/incrediblecrab/parameter-golf",
+  "fork": "https://github.com/incrediblecrab/2026-parameter-golf",
   "models": [
     {
       "id": "baseline",

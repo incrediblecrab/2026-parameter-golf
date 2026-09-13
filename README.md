@@ -2,7 +2,7 @@
 
 Review and source collection as of **September 9, 2026**.
 
-This is a study fork of [openai/parameter-golf](https://github.com/openai/parameter-golf), available at [incrediblecrab/parameter-golf](https://github.com/incrediblecrab/parameter-golf). The full upstream checkout is retained, with four additional PR-only submission directories. **Fourteen representative models are featured below**, rather than treating every small leaderboard variation as a different architecture.
+This is a study fork of [openai/parameter-golf](https://github.com/openai/parameter-golf), available at [incrediblecrab/2026-parameter-golf](https://github.com/incrediblecrab/2026-parameter-golf). The full upstream checkout is retained, with four additional PR-only submission directories. **Fourteen representative models are featured below**, rather than treating every small leaderboard variation as a different architecture.
 
 The original project README, setup instructions, and complete published leaderboard are preserved in [UPSTREAM_README.md](UPSTREAM_README.md). Exact source revisions and entry points are recorded in [model_sources.json](model_sources.json). Submission code, write-ups, tokenizers, and existing logs are preserved without modification.
 
