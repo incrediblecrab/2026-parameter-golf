@@ -1,10 +1,24 @@
-# Parameter Golf: results and model study guide
+# 2026-parameter-golf
 
-Review and source collection as of **September 9, 2026**.
+This public fork of [`openai/parameter-golf`](https://github.com/openai/parameter-golf) is Max Marquardt's study collection for the Model Craft Challenge: Parameter Golf results. It keeps the upstream checkout, additional PR-only submission directories, provenance records and a curated reading guide; it is a source study, not a claim that the experiments have been reproduced.
 
-This is a study fork of [openai/parameter-golf](https://github.com/openai/parameter-golf), available at [incrediblecrab/2026-parameter-golf](https://github.com/incrediblecrab/2026-parameter-golf). The full upstream checkout is retained, with four additional PR-only submission directories. **Fourteen representative models are featured below**, rather than treating every small leaderboard variation as a different architecture.
+**Objective:** preserve the upstream challenge material and organize the accepted leaderboard, non-record studies, source revisions, caveats and reading order for understanding the competition's model-design results.
 
-The original project README, setup instructions, and complete published leaderboard are preserved in [UPSTREAM_README.md](UPSTREAM_README.md). Exact source revisions and entry points are recorded in [model_sources.json](model_sources.json). Submission code, write-ups, tokenizers, and existing logs are preserved without modification.
+**Inputs:** the upstream repository at commit [`f5c079314c4877fbb0af378c0abade5a8ca33d3a`](https://github.com/openai/parameter-golf/commit/f5c079314c4877fbb0af378c0abade5a8ca33d3a), selected pull-request revisions named in [`model_sources.json`](model_sources.json), submitted write-ups, logs and support files. Running most code needs the upstream challenge environment, GPU dependencies and datasets named by each submission.
+
+**Files:**
+
+- [`UPSTREAM_README.md`](UPSTREAM_README.md): the original project README, setup instructions and full published leaderboard
+- [`model_sources.json`](model_sources.json): featured-model source revisions, directories and entry points
+- [`records/`](records/): accepted leaderboard entries and non-record model studies
+- [`data/`](data/README.md): copied or generated data artifacts retained for the study collection
+- [`paper/`](paper/): DG Attention paper artifact retained with its entry
+- [`results/`](results/): local result artifacts for the study collection
+- [`scripts/`](scripts/): helper scripts retained from the fork and study work
+- [`train_gpt.py`](train_gpt.py), [`train_gpt_mlx.py`](train_gpt_mlx.py) and [`measure_variance_ratio.py`](measure_variance_ratio.py): root entry points retained from the upstream or study material
+- [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md): third-party attribution retained with the fork
+
+**Try it:** start with [`UPSTREAM_README.md`](UPSTREAM_README.md#getting-started) and the README for the specific record you want to inspect; the root [`requirements.txt`](requirements.txt) names common Python dependencies, but CUDA, FlashAttention, Mamba, system-compressor and dataset requirements vary by entry.
 
 ## What was the challenge?
 
@@ -156,3 +170,7 @@ Use the [upstream setup guide](UPSTREAM_README.md#getting-started) and each entr
 [dg-doc]: records/track_non_record_16mb/2026-03-23_DGAttention_DavidGao/README.md
 [dg-code]: records/track_non_record_16mb/2026-03-23_DGAttention_DavidGao/train_gpt.py
 [dg-metadata]: records/track_non_record_16mb/2026-03-23_DGAttention_DavidGao/submission.json
+
+## License
+
+MIT, from the upstream [openai/parameter-golf](https://github.com/openai/parameter-golf). See [`LICENSE`](LICENSE).
