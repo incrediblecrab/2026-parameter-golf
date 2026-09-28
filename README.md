@@ -14,7 +14,7 @@ This public fork of [`openai/parameter-golf`](https://github.com/openai/paramete
 - [`data/`](data/README.md): copied or generated data artifacts retained for the study collection
 - [`paper/`](paper/): DG Attention paper artifact retained with its entry
 - [`results/`](results/): local result artifacts for the study collection
-- [`scripts/`](scripts/): helper scripts retained from the fork and study work
+- [`scripts/`](scripts/): helper scripts retained from the fork and study work, plus [`check_readme_claims.py`](scripts/check_readme_claims.py), which recomputes this README's numbers from the shipped logs
 - [`train_gpt.py`](train_gpt.py), [`train_gpt_mlx.py`](train_gpt_mlx.py) and [`measure_variance_ratio.py`](measure_variance_ratio.py): root entry points retained from the upstream or study material
 - [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md): third-party attribution retained with the fork
 
@@ -85,19 +85,19 @@ These ten alternatives, together with the baseline and top three above, make up 
 | [Masked diffusion language model][diffusion-doc] ([code][diffusion-code]) | **1.1465**, variational | Bidirectional masked-token prediction, timestep conditioning, and an absorbing-mask ELBO rather than ordinary autoregressive scoring | The write-up uses **approximate byte counting** and reports a 31-minute run on **2xH100**. Its extrapolated 8-GPU time is not a measured record. |
 | [Mamba-3 hybrid][mamba-doc] ([code][mamba-code]) | **1.1473** | Combine five state-space blocks with two attention layers, then add quantization and score-first adaptation | A non-record hybrid study, not a pure SSM and not evidence that attention can simply be removed without cost. |
 | [JEPA + Mamba-2 / LeWorldModel][jepa-doc] ([code][jepa-code]) | **1.2064** long run; **1.2566** 10-minute BPE run | Add latent-state prediction and anti-collapse regularization to a state-space language model; remove training-only auxiliary modules from the exported artifact | The headline result used about **2.7 hours**. The token-prediction head remains necessary for BPB evaluation. |
-| [Byte-level H-Net][hnet-doc] ([byte code][hnet-code]) | **1.3595** at 4 hours; **1.4116** 10-minute mean | Learn chunk boundaries from raw bytes, process a compressed sequence, then expand back to byte predictions | Useful matched byte-versus-subword experiments and boundary analysis, but the headline score is not a 10-minute result. |
+| [Byte-level H-Net][hnet-doc] ([byte code][hnet-code]) | **1.3595** at 4 hours; **1.4116** 10-minute mean | Learn chunk boundaries from raw bytes, process a compressed sequence, then expand back to byte predictions | Useful matched byte-versus-subword experiments and boundary analysis, but the headline score is not a 10-minute result. Only one 10-minute byte log is shipped (seed 1337, 1.4032); the three-seed 1.4116 mean cannot be recomputed here. |
 | [Universal Transformer][universal-doc] ([code][universal-code]) | **1.2249** | Three unique blocks reused four times, with iteration embeddings/scales; reported **4.95 MB** artifact | A single-seed non-record result near baseline quality. Strong weight sharing saves space but does not automatically improve the score. |
-| [LegendreGPT][legendre-doc] ([code][legendre-code]) | **1.2266** | Generate layer weights as smooth functions of depth using learned Legendre-polynomial coefficients; 24 virtual layers | About **27 hours on one RTX 5090**; the headline score uses a separate post-hoc mixed-precision export. |
-| [Learned adapters on random linear maps][random-doc] ([code][random-code]) | **1.1971** listed | Regenerate frozen MLP base matrices from seeds and store learned low-rank adapters instead of full dense matrices | These are stored, training-time adapters, not the same mechanism as evaluation-time LoRA. The listed score is one run; the write-up includes three runs. |
+| [LegendreGPT][legendre-doc] ([code][legendre-code]) | **1.2266** | Generate layer weights as smooth functions of depth using learned Legendre-polynomial coefficients; 24 virtual layers | About **27 hours on one RTX 5090**; the headline score uses a separate post-hoc mixed-precision export. The shipped log ends at **1.2353** (INT7+zlib); 1.2266 is not in any shipped log. |
+| [Learned adapters on random linear maps][random-doc] ([code][random-code]) | **1.1971** listed | Regenerate frozen MLP base matrices from seeds and store learned low-rank adapters instead of full dense matrices | These are stored, training-time adapters, not the same mechanism as evaluation-time LoRA. The listed score is the worst of three shipped seeds (1.1967, 1.1969, 1.1971; mean 1.1969), and it is a sliding-window score; the plain roundtrip is about 1.218. |
 | [DG Attention][dg-doc] ([code][dg-code], [paper](paper/dg_attention.pdf)) | **1.1898** listed; **1.1554** later write-up | Deep layers send differential rather than absolute content; study matched controls, memory costs, and informative negative results | The later matched standard-attention result is **1.1516**. The write-up does not establish a quality win; initial metadata also needs the qualification below. |
 
 ### Keep the caveats attached to the numbers
 
 Non-record does not mean uninteresting, and a lower number does not make differently evaluated runs comparable.
 
-The MDLM entry's [metadata][diffusion-metadata] also reports 1,819 seconds of evaluation on its 2-GPU setup. Do not interpret its ELBO score or extrapolated training time as meeting the record track's full measured protocol.
+The MDLM entry's [metadata][diffusion-metadata] also reports 1,819 seconds of evaluation on its 2-GPU setup. Do not interpret its ELBO score or extrapolated training time as meeting the record track's full measured protocol. The entry ships no training log and no artifact byte count, so its 1.1465 cannot be checked from this checkout; its own write-up also gives 1.154 for the 2xH100 validation run.
 
-DG Attention's [original metadata][dg-metadata] still records **1.1898 BPB and 16,638,468 bytes**, which exceeds the decimal 16 MB cap. Its write-up discusses later experiments with different results. Those are separate pieces of evidence, not interchangeable descriptions of one compliant run. The original files are preserved rather than silently rewritten to resolve this discrepancy.
+DG Attention's [original metadata][dg-metadata] still records **1.1898 BPB and 16,638,468 bytes**, which exceeds the decimal 16 MB cap. Its [train.log][dg-log] shows that 1.1898 is the last in-training validation at step 2,979, before export; the log contains no post-quantization roundtrip score. Its write-up discusses later experiments with different results. Those are separate pieces of evidence, not interchangeable descriptions of one compliant run. The original files are preserved rather than silently rewritten to resolve this discrepancy.
 
 OpenAI specifically highlighted the JEPA/Mamba-2, H-Net, and DG Attention submissions as interesting non-record work, **not necessarily the best-scoring alternatives**.
 
@@ -135,6 +135,16 @@ The following additional submission directories were copied from exact PR revisi
 
 This is a **source study collection**, not a claim that all experiments have been reproduced. No GPU jobs have been launched or training datasets/neural checkpoints downloaded for this collection. Existing tokenizer files and submitted logs are included.
 
+### What was checked on disk
+
+On September 28, 2026, every score, byte count and time in this README was recomputed from the logs and metadata shipped in `records/`:
+
+```bash
+python3 scripts/check_readme_claims.py   # 35 of 35 checks pass; exits 1 on any mismatch
+```
+
+This checks that the authors' logs agree with the numbers quoted here. It does not rerun any model, so it cannot catch a log that misreports what the code did. For the top three, the per-seed logs reproduce the three-seed means to five decimals, every artifact is under 16,000,000 bytes, and every training and evaluation run is under 600 seconds. The checks also produced the qualifications added above: the random-adapter score is its worst seed, H-Net's 10-minute mean and LegendreGPT's headline are not in any shipped log, DG Attention's 1.1898 comes before export, and MDLM ships no log at all. The gate was tested by planting a wrong winner mean, which made it exit 1.
+
 Use the [upstream setup guide](UPSTREAM_README.md#getting-started) and each entry's own instructions before attempting a run. CUDA, FlashAttention, Mamba, system-compressor, and dataset requirements vary, and some commands contain the authors' original cloud paths. The [MLX starter](train_gpt_mlx.py) is the Apple Silicon entry point; it is **not** a port of all the winning or alternative models.
 
 [baseline-doc]: records/track_10min_16mb/2026-03-17_NaiveBaseline/README.md
@@ -170,6 +180,7 @@ Use the [upstream setup guide](UPSTREAM_README.md#getting-started) and each entr
 [dg-doc]: records/track_non_record_16mb/2026-03-23_DGAttention_DavidGao/README.md
 [dg-code]: records/track_non_record_16mb/2026-03-23_DGAttention_DavidGao/train_gpt.py
 [dg-metadata]: records/track_non_record_16mb/2026-03-23_DGAttention_DavidGao/submission.json
+[dg-log]: records/track_non_record_16mb/2026-03-23_DGAttention_DavidGao/train.log
 
 ## License
 
