@@ -13,3 +13,10 @@ logs/*.pt
 logs/
 .claude/settings.local.json
 STRATEGY.md
+
+# Local environment files can hold credentials; committed templates stay tracked.
+.env
+.env.*
+!.env.example
+!.env.template
+!.env.sample
